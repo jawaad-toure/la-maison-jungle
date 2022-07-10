@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles/Layout.css";
+import { useState, useEffect } from "react";
+import logo from "./assets/logo.png";
+import Banner from "./components/Banner.js";
+import CartPreview from "./components/CartPreview.js";
+import ShoppingList from "./components/ShoppingList.js";
+import Footer from "./components/Footer.js";
 
 function App() {
+  const savedCart = localStorage.getItem("cart");
+  const [cart, updateCart] = useState(savedCart ? JSON.parse(savedCart) : []);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(
+    () => {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    },
+    [cart]
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Banner>
+        <img src={logo} alt="La maison jungle" className="lmj-logo" />
+        <h1 className="lmj-title">La maison jungle</h1>
+      </Banner>
+
+      <div className="lmj-layout-inner">
+        <CartPreview isOpen={isOpen} setIsOpen={setIsOpen} cart={cart} updateCart={updateCart} />
+
+        <ShoppingList setIsOpen={setIsOpen} cart={cart} updateCart={updateCart} />
+      </div>
+
+      <Footer />
     </div>
   );
 }
