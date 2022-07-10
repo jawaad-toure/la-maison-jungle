@@ -1,4 +1,4 @@
-import '../styles/Cart.css';
+import '../styles/CartPreview.css';
 import { useEffect } from 'react';
 
 function Cart({ isOpen, setIsOpen, cart, updateCart }) {
